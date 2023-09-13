@@ -1,25 +1,24 @@
 #!/usr/bin/python3
 """
-Module that contain a class Student
+Student
+Class
 """
 
 
 class Student:
-    """ Student class """
+
     def __init__(self, first_name, last_name, age):
+        """Constructor"""
         self.first_name = first_name
         self.last_name = last_name
         self.age = age
 
     def to_json(self, attrs=None):
-        """ return studen dictionary """
-        temporal_dict = {}
-        if attrs is None:
-            return self.__dict__
-        temporal_dict = dict()
-        # only attribute names
-        # contained in this list must be retrieved
-        for key in attrs:
-            if key in self.__dict__.keys():
-                temporal_dict[key] = self.__dict__[key]
-        return temporal_dict
+        """
+        Public method Retrieves a dictionary representation of a
+        Student instance
+        """
+        if (isinstance(attrs, list) and
+                all(isinstance(x, str) for x in attrs)):
+            return {x: getattr(self, x) for x in attrs if hasattr(self, x)}
+        return self.__dict__
